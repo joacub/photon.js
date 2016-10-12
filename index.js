@@ -7,6 +7,7 @@ var url = require('url');
 var crc32 = require('crc32');
 var seed = require('seed-random');
 var debug = require('debug')('photon');
+var usePhoton = require('config')('usePhoton');
 
 /**
  * Module exports.
@@ -41,6 +42,8 @@ var mappings = {
 
 function photon (imageUrl, opts) {
 
+  if(!usePhoton)
+    return imageUrl;
   // parse the URL, assuming //host.com/path style URLs are ok and parse the querystring
   var parsedUrl = url.parse( imageUrl, true, true ),
     wasSecure = parsedUrl.protocol === 'https:';
